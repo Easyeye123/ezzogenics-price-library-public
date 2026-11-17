@@ -1,0 +1,9 @@
+.env
+.env.*
+*.zip
+__pycache__/
+original_quotes/
+drawings/
+Contractor_Price_Library.sqlite
+*.sqlite-wal
+*.sqlite-shm
