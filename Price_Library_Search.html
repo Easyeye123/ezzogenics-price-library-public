@@ -1,0 +1,1183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contractor Price Library • Windows, Doors & Skylights</title>
+    <style>
+      :root {
+        --bg: #f4f6f8;
+        --paper: #fff;
+        --ink: #162637;
+        --muted: #64758a;
+        --line: #dbe3eb;
+        --blue: #124b73;
+        --dark: #102f47;
+        --accent: #008b68;
+        --pale: #eef5f9;
+        --amber: #fff3d7;
+        --shadow: 0 9px 26px rgba(18, 45, 70, 0.065);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--bg);
+        font:
+          14px/1.5 -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Arial,
+          sans-serif;
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      .hidden {
+        display: none !important;
+      }
+      .top {
+        background: linear-gradient(112deg, #0e2c43, #1a5878);
+        color: white;
+        padding: 30px 35px 28px;
+      }
+      .toprow {
+        max-width: 1500px;
+        margin: auto;
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .eyebrow {
+        color: #a7d5e9;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 750;
+      }
+      .top h1 {
+        font-size: 27px;
+        margin: 3px 0 4px;
+        letter-spacing: -0.6px;
+      }
+      .top p {
+        color: #cddde8;
+        margin: 0;
+      }
+      .headerActions {
+        display: flex;
+        gap: 9px;
+        flex-wrap: wrap;
+        padding-top: 8px;
+      }
+      .btn {
+        border: 1px solid #cad6e2;
+        background: #fff;
+        color: var(--ink);
+        border-radius: 9px;
+        padding: 9px 13px;
+        font-weight: 650;
+        white-space: nowrap;
+      }
+      .btn:hover {
+        border-color: #70a7bc;
+        box-shadow: 0 2px 10px #102f4715;
+      }
+      .btn.dark {
+        background: #d7f3ec;
+        color: #07533f;
+        border-color: transparent;
+      }
+      .btn.ghost {
+        background: #ffffff18;
+        color: #fff;
+        border-color: #ffffff66;
+      }
+      .btn.primary {
+        background: #145477;
+        color: white;
+        border-color: #145477;
+      }
+      .page {
+        max-width: 1500px;
+        padding: 24px 28px 60px;
+        margin: auto;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(120px, 1fr));
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+      .metric {
+        background: white;
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        border-radius: 12px;
+        padding: 14px 18px;
+      }
+      .metric .small {
+        font-size: 11px;
+        color: #627386;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+      }
+      .metric .big {
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: -0.8px;
+      }
+      .metric .suffix {
+        font-size: 12px;
+        color: #688096;
+        margin-left: 5px;
+      }
+      .controlPanel {
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 18px;
+        box-shadow: var(--shadow);
+      }
+      .controlbar {
+        display: grid;
+        grid-template-columns: minmax(200px, 2.5fr) repeat(
+            4,
+            minmax(115px, 1fr)
+          ) minmax(130px, 1fr);
+        gap: 10px;
+      }
+      .search {
+        position: relative;
+      }
+      .search input {
+        padding-left: 37px !important;
+      }
+      .glass {
+        position: absolute;
+        left: 12px;
+        top: 10px;
+        color: #7d91a1;
+        font-size: 18px;
+      }
+      .field label {
+        display: block;
+        font-size: 11px;
+        font-weight: 800;
+        color: #617589;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        margin-bottom: 5px;
+      }
+      .field input,
+      .field select {
+        height: 42px;
+        width: 100%;
+        outline: 0;
+        border: 1px solid #d1dce6;
+        border-radius: 8px;
+        background: #fff;
+        color: #234;
+        padding: 0 11px;
+        min-width: 0;
+      }
+      .field input:focus,
+      .field select:focus {
+        border-color: #279cb6;
+        box-shadow: 0 0 0 3px #279cb61c;
+      }
+      .filterRow {
+        display: flex;
+        gap: 8px;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 14px;
+        flex-wrap: wrap;
+      }
+      .tabs {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+      }
+      .tab {
+        background: #eff4f7;
+        color: #466075;
+        border: 1px solid transparent;
+        border-radius: 100px;
+        padding: 7px 12px;
+        font-size: 12px;
+        font-weight: 750;
+      }
+      .tab.active {
+        background: #dcedf4;
+        border: 1px solid #96bfd2;
+        color: #114c71;
+      }
+      .actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .resultsHead {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin: 22px 0 12px;
+        flex-wrap: wrap;
+      }
+      .resultsHead h2 {
+        font-size: 18px;
+        letter-spacing: -0.2px;
+        margin: 0;
+      }
+      .resultsHead p {
+        font-size: 12px;
+        color: var(--muted);
+        margin: 2px 0 0;
+      }
+      .library {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 14px;
+      }
+      .item {
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .item:hover {
+        border-color: #a4c4d7;
+      }
+      .itemTop {
+        display: flex;
+        gap: 15px;
+        padding: 14px 15px 10px;
+      }
+      .thumb {
+        width: 126px;
+        min-width: 126px;
+        height: 112px;
+        border: 1px solid #edf0f3;
+        border-radius: 7px;
+        object-fit: contain;
+        background: #fff;
+        cursor: zoom-in;
+      }
+      .itemTitle {
+        font-size: 15px;
+        font-weight: 800;
+        line-height: 1.28;
+        margin-bottom: 6px;
+      }
+      .lineMuted {
+        color: #6b7f8e;
+        font-size: 12px;
+      }
+      .price {
+        font-weight: 850;
+        color: #126d51;
+        font-size: 20px;
+        letter-spacing: -0.5px;
+        margin: 4px 0;
+      }
+      .price small {
+        font-size: 11px;
+        color: #789084;
+        font-weight: 650;
+      }
+      .price.zero {
+        color: #a6641a;
+      }
+      .tagGroup {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+        margin-top: 9px;
+      }
+      .tag {
+        border-radius: 5px;
+        background: #eaf0f4;
+        color: #466378;
+        padding: 3px 6px;
+        font-size: 10px;
+        font-weight: 700;
+      }
+      .tag.warn {
+        background: #fff0cc;
+        color: #9a620d;
+      }
+      .itemBody {
+        padding: 1px 15px 12px;
+        flex: 1;
+      }
+      .facts {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 7px;
+        margin: 9px 0;
+      }
+      .facts div {
+        border-top: 1px solid #edf1f5;
+        padding-top: 6px;
+        font-size: 12px;
+      }
+      .facts strong {
+        display: block;
+        color: #60778b;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 750;
+      }
+      .spec {
+        font-size: 11px;
+        color: #566879;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .itemFoot {
+        border-top: 1px solid #edf0f3;
+        padding: 10px 14px;
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        align-items: center;
+        background: #fbfcfd;
+      }
+      .itemFoot label {
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #496072;
+        cursor: pointer;
+      }
+      .itemFoot input {
+        accent-color: #096a83;
+      }
+      .mini {
+        font-size: 11px;
+        color: #778b9b;
+      }
+      .openbtn {
+        background: #edf5f9;
+        border: 1px solid #bfd5e0;
+        border-radius: 7px;
+        color: #165270;
+        padding: 6px 10px;
+        font-size: 12px;
+        font-weight: 750;
+      }
+      .empty {
+        padding: 55px 20px;
+        text-align: center;
+        color: #657d8c;
+        background: #fff;
+        border: 1px dashed #bad0da;
+        border-radius: 12px;
+        grid-column: 1/-1;
+      }
+      .notice {
+        color: #746036;
+        background: #fff7e6;
+        border: 1px solid #f6e4b2;
+        padding: 11px 14px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        font-size: 12px;
+      }
+      .summaryRow {
+        margin: 9px 0 0;
+        color: #516779;
+        font-size: 12px;
+      }
+      .overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 99;
+        background: #081a2bbd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .dialog {
+        background: white;
+        border-radius: 14px;
+        box-shadow: 0 28px 90px #07182770;
+        width: min(1010px, 98vw);
+        max-height: 94vh;
+        overflow: auto;
+      }
+      .dialogbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 20px;
+        border-bottom: 1px solid #d9e3eb;
+        gap: 12px;
+      }
+      .dialogbar h2 {
+        font-size: 18px;
+        margin: 0;
+      }
+      .x {
+        border: 0;
+        border-radius: 8px;
+        padding: 5px 10px;
+        background: #f0f3f6;
+        font-size: 22px;
+      }
+      .dialogContent {
+        padding: 20px;
+      }
+      .detailGrid {
+        display: grid;
+        grid-template-columns: minmax(235px, 0.9fr) 1.2fr;
+        gap: 23px;
+      }
+      .detailGrid img {
+        width: 100%;
+        height: auto;
+        max-height: 500px;
+        object-fit: contain;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+      .detailGrid h3 {
+        font-size: 22px;
+        margin: 0 0 6px;
+      }
+      .detailPrice {
+        font-size: 25px;
+        font-weight: 850;
+        color: #08714e;
+      }
+      .kv {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 7px;
+        font-size: 12px;
+        border-top: 1px solid #e6edf2;
+        padding: 9px 0;
+      }
+      .kv strong {
+        color: #607183;
+      }
+      .pre {
+        white-space: pre-wrap;
+        background: #f5f8fa;
+        border: 1px solid #e5edf3;
+        border-radius: 8px;
+        padding: 14px;
+        font-size: 12px;
+        line-height: 1.7;
+        margin-top: 13px;
+      }
+      .compareWrap {
+        overflow: auto;
+      }
+      .compareTable {
+        border-collapse: collapse;
+        width: 100%;
+        min-width: 660px;
+        font-size: 12px;
+      }
+      .compareTable th,
+      .compareTable td {
+        border: 1px solid #dbe3e9;
+        text-align: left;
+        padding: 9px;
+        vertical-align: top;
+      }
+      .compareTable th {
+        background: #eaf3f8;
+        font-weight: 800;
+      }
+      .compareTable td:first-child {
+        font-weight: 800;
+        background: #f5f8fa;
+        min-width: 125px;
+      }
+      .compareTable img {
+        width: 150px;
+        max-height: 120px;
+        object-fit: contain;
+      }
+      .formGrid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .footer {
+        margin-top: 29px;
+        color: #607386;
+        font-size: 12px;
+      }
+      .footer a {
+        color: #126187;
+      }
+      .hint {
+        font-size: 11px;
+        color: #63798b;
+      }
+      .roundPill {
+        border-radius: 100px;
+        background: #d6f5ec;
+        color: #006b53;
+        padding: 5px 10px;
+        font-weight: 750;
+        font-size: 11px;
+      }
+      @media (max-width: 1050px) {
+        .controlbar {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .controlbar .search {
+          grid-column: span 3;
+        }
+      }
+      @media (max-width: 680px) {
+        .page {
+          padding: 18px 13px;
+        }
+        .top {
+          padding: 26px 17px;
+        }
+        .top h1 {
+          font-size: 24px;
+        }
+        .stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .controlbar {
+          grid-template-columns: 1fr 1fr;
+        }
+        .controlbar .search {
+          grid-column: span 2;
+        }
+        .library {
+          grid-template-columns: 1fr;
+        }
+        .detailGrid {
+          grid-template-columns: 1fr;
+        }
+        .metric .big {
+          font-size: 23px;
+        }
+        .formGrid {
+          grid-template-columns: 1fr;
+        }
+        .itemTop {
+          gap: 10px;
+        }
+        .thumb {
+          min-width: 111px;
+          width: 111px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="top">
+      <div class="toprow">
+        <div>
+          <div class="eyebrow">
+            Contractor Procurement Database • Offline Edition
+          </div>
+          <h1>Window, Door & Skylight Price Library</h1>
+          <p>
+            Search quotations by technical specifications, inspect drawings, and
+            compare supplier unit prices.
+          </p>
+        </div>
+        <div class="headerActions">
+          <button class="btn ghost" onclick="showModal('about')">
+            How to use</button
+          ><button
+            class="btn ghost"
+            onclick="document.querySelector('#importJson').click()"
+          >
+            Import extracted JSON</button
+          ><input
+            class="hidden"
+            type="file"
+            accept=".json,application/json"
+            id="importJson"
+          /><button class="btn dark" onclick="showModal('add')">
+            + Add unpriced item
+          </button>
+        </div>
+      </div>
+    </header>
+    <main class="page">
+      <section class="stats">
+        <div class="metric">
+          <div class="small">Quote line items</div>
+          <div class="big" id="statRows">—</div>
+        </div>
+        <div class="metric">
+          <div class="small">Unique configurations</div>
+          <div class="big" id="statConfigs">—</div>
+        </div>
+        <div class="metric">
+          <div class="small">Supplier quotes</div>
+          <div class="big" id="statQuotes">—</div>
+        </div>
+        <div class="metric">
+          <div class="small">Unpriced / verify</div>
+          <div class="big" id="statReview">—</div>
+        </div>
+      </section>
+      <div class="notice">
+        <b>Price basis:</b> supplier's quoted <b>unit price per set</b>, not a
+        rate per square metre. RMB and USD prices remain separate; no currency
+        conversion is performed. A stated price of 0 is flagged for
+        verification.
+      </div>
+      <section class="controlPanel">
+        <div class="controlbar">
+          <div class="field search">
+            <label for="q">Search anything</label><span class="glass">⌕</span
+            ><input
+              id="q"
+              placeholder="e.g. 110 series, sliding, 5mm+20Ar, 2350, key lock"
+              autocomplete="off"
+            />
+          </div>
+          <div class="field">
+            <label for="project">Quote / project</label
+            ><select id="project">
+              <option value="">All quotations</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="category">Product type</label
+            ><select id="category">
+              <option value="">All types</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="series">Series</label
+            ><select id="series">
+              <option value="">All series</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="thermal">Thermal system</label
+            ><select id="thermal">
+              <option value="">All systems</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="sort">Sort results</label
+            ><select id="sort">
+              <option value="date">Newest first</option>
+              <option value="priceAsc">Unit price low → high</option>
+              <option value="priceDesc">Unit price high → low</option>
+              <option value="product">Product A–Z</option>
+              <option value="size">Area (large first)</option>
+            </select>
+          </div>
+        </div>
+        <div class="filterRow">
+          <div class="tabs">
+            <button class="tab active" data-view="all">All prices</button
+            ><button class="tab" data-view="priced">Priced only</button
+            ><button class="tab" data-view="review">Unpriced / zero</button
+            ><button class="tab" data-view="repeats">
+              Repeat configurations
+            </button>
+          </div>
+          <div class="actions">
+            <button class="btn" onclick="resetFilters()">Clear filters</button
+            ><button class="btn" onclick="exportCsv()">
+              Export filtered CSV</button
+            ><button
+              class="btn primary"
+              onclick="showCompare()"
+              id="compareBtn"
+            >
+              Compare selected (0)
+            </button>
+          </div>
+        </div>
+      </section>
+      <div class="resultsHead">
+        <div>
+          <h2>Quotation unit prices</h2>
+          <p id="countLabel">Loading records…</p>
+        </div>
+        <div class="hint">
+          Select up to 4 items for side-by-side comparison • Click a drawing to
+          enlarge
+        </div>
+      </div>
+      <div class="library" id="library"></div>
+      <div class="footer">
+        Public code distribution: no supplier records, original quotations, or
+        drawings are included. Populate only through a separately controlled,
+        authorised sanitisation workflow. This is not a live product-pricing feed.
+      </div>
+    </main>
+    <div
+      id="modal"
+      class="overlay hidden"
+      role="dialog"
+      aria-modal="true"
+      onclick="if(event.target===this)hideModal()"
+    >
+      <div class="dialog">
+        <div class="dialogbar">
+          <h2 id="modalTitle"></h2>
+          <button class="x" onclick="hideModal()" aria-label="Close">×</button>
+        </div>
+        <div class="dialogContent" id="modalContent"></div>
+      </div>
+    </div>
+    <script>
+      const ORIGINAL_DATA = [];
+      const LS = "contractor_price_library_additions_v1";
+      let added = [];
+      try {
+        added = JSON.parse(localStorage.getItem(LS) || "[]");
+      } catch (e) {}
+      let DATA = [...ORIGINAL_DATA, ...added];
+      const selected = new Set();
+      let currentView = "all",
+        filtered = [];
+      const esc = (s) =>
+        String(s ?? "").replace(
+          /[&<>\"']/g,
+          (m) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '\"': "&quot;",
+              "'": "&#39;",
+            })[m],
+        );
+      const money = (v, cur) =>
+        v === null || v === undefined || v === ""
+          ? "Not quoted"
+          : `${cur === "RMB" ? "¥" : cur === "USD" ? "$" : ""}${Number(v).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${cur || ""}`;
+      const v = (id) => document.getElementById(id).value;
+      const unique = (key) =>
+        [...new Set(DATA.map((x) => x[key]).filter(Boolean))].sort((a, b) =>
+          String(a).localeCompare(String(b), undefined, { numeric: true }),
+        );
+      function populate() {
+        for (let [id, k] of [
+          ["project", "quote_id"],
+          ["category", "category"],
+          ["series", "series"],
+          ["thermal", "thermal_break"],
+        ]) {
+          let s = document.getElementById(id),
+            old = s.value;
+          s.querySelectorAll("option:not(:first-child)").forEach((x) =>
+            x.remove(),
+          );
+          for (let val of unique(k)) {
+            const op = document.createElement("option");
+            op.value = val;
+            op.textContent = val;
+            s.appendChild(op);
+          }
+          s.value = old;
+        }
+        document.getElementById("statRows").textContent = DATA.length;
+        document.getElementById("statConfigs").textContent = new Set(
+          DATA.map((x) => x.configuration_id),
+        ).size;
+        document.getElementById("statQuotes").textContent = new Set(
+          DATA.map((x) => x.quote_id),
+        ).size;
+        document.getElementById("statReview").textContent = DATA.filter(
+          (x) =>
+            x.unit_price === null ||
+            x.unit_price === undefined ||
+            Number(x.unit_price) === 0,
+        ).length;
+      }
+      function update() {
+        let q = v("q").toLowerCase().trim().split(/\s+/).filter(Boolean);
+        filtered = DATA.filter((x) => {
+          if (v("project") && x.quote_id !== v("project")) return false;
+          if (v("category") && x.category !== v("category")) return false;
+          if (v("series") && x.series !== v("series")) return false;
+          if (v("thermal") && x.thermal_break !== v("thermal")) return false;
+          const pr =
+            x.unit_price === null || x.unit_price === undefined
+              ? null
+              : Number(x.unit_price);
+          if (currentView === "priced" && !(pr > 0)) return false;
+          if (currentView === "review" && pr !== 0 && pr !== null) return false;
+          if (currentView === "repeats" && !(x.configuration_quotes > 1))
+            return false;
+          let hay = [
+            x.product,
+            x.category,
+            x.operation,
+            x.series,
+            x.location,
+            x.specifications,
+            x.glass,
+            x.thermal_break,
+            x.thickness,
+            x.finish,
+            x.hardware,
+            x.project,
+            x.quote_id,
+            x.source_item,
+            x.width_mm,
+            x.height_mm,
+            x.unit_price,
+            x.currency,
+          ]
+            .join(" ")
+            .toLowerCase();
+          return q.every((w) => hay.includes(w));
+        });
+        let sort = v("sort");
+        filtered.sort((a, b) =>
+          sort === "priceAsc"
+            ? (a.unit_price ?? Infinity) - (b.unit_price ?? Infinity)
+            : sort === "priceDesc"
+              ? (b.unit_price ?? -Infinity) - (a.unit_price ?? -Infinity)
+              : sort === "product"
+                ? a.product.localeCompare(b.product)
+                : sort === "size"
+                  ? (b.area_sqm ?? 0) - (a.area_sqm ?? 0)
+                  : String(
+                      /^\d{4}-/.test(b.quote_date) ? b.quote_date : "",
+                    ).localeCompare(
+                      String(/^\d{4}-/.test(a.quote_date) ? a.quote_date : ""),
+                    ),
+        );
+        document.getElementById("countLabel").textContent =
+          `${filtered.length} matching items · ${new Set(filtered.map((x) => x.configuration_id)).size} distinct configurations · Prices shown in original currency`;
+        render();
+      }
+      function render() {
+        let holder = document.getElementById("library");
+        if (!filtered.length) {
+          holder.innerHTML =
+            '<div class="empty"><h3>No items matched these filters.</h3>Try searching by a different series, width, operation, or glazing description.</div>';
+          return;
+        }
+        holder.innerHTML = filtered
+          .map(
+            (x) =>
+              `<article class="item"><div class="itemTop"><img class="thumb" src="${x.drawing_embed || ""}" alt="Technical drawing for ${esc(x.product)}" onclick="openItem('${esc(x.id)}')"/><div style="min-width:0"><div class="itemTitle">${esc(x.product)}</div><div class="lineMuted">${esc(x.series || x.category)} • ${esc(x.thermal_break)}</div><div class="price ${x.unit_price === 0 ? "zero" : ""}">${money(x.unit_price, x.currency)}</div><div class="lineMuted">per set · ${x.width_mm || "—"} × ${x.height_mm || "—"} mm</div><div class="tagGroup">${x.unit_price === 0 || x.unit_price == null ? '<span class="tag warn">Check price</span>' : ""}${x.configuration_quotes > 1 ? `<span class="tag">${x.configuration_quotes} similar quote records</span>` : ""}<span class="tag">${esc(x.operation)}</span></div></div></div><div class="itemBody"><div class="facts"><div><strong>Quote / date</strong>${esc(x.quote_id)}<br>${esc(x.quote_date)}</div><div><strong>Line item / quantity</strong>${esc(x.source_item)} · ${x.quantity || "—"} set(s)</div><div><strong>Unit area / quoted area</strong>${x.area_sqm ?? "—"} / ${x.total_sqm ?? "—"} m²</div><div><strong>Quoted line amount</strong>${money(x.amount, x.currency)}</div></div><div class="spec">${esc(x.glass || x.specifications || "Specifications not stated")}</div></div><div class="itemFoot"><label><input type="checkbox" ${selected.has(x.id) ? "checked" : ""} onchange="toggleCompare('${esc(x.id)}',this.checked)"/> Compare</label><span class="mini">${esc(x.source_file.slice(0, 26))}…</span><button class="openbtn" onclick="openItem('${esc(x.id)}')">Details ↗</button></div></article>`,
+          )
+          .join("");
+      }
+      function toggleCompare(id, on) {
+        if (on) {
+          if (selected.size >= 4) {
+            alert("Select up to four quotation items.");
+            render();
+            return;
+          }
+          selected.add(id);
+        } else selected.delete(id);
+        document.getElementById("compareBtn").textContent =
+          `Compare selected (${selected.size})`;
+        render();
+      }
+      function rows(k, v) {
+        return `<div class="kv"><strong>${esc(k)}</strong><span>${esc(v ?? "—")}</span></div>`;
+      }
+      function openItem(id) {
+        let x = DATA.find((a) => a.id === id);
+        if (!x) return;
+        document.getElementById("modalTitle").textContent =
+          "Quotation item · " + x.id;
+        document.getElementById("modalContent").innerHTML =
+          `<div class="detailGrid"><div><img src="${x.drawing_embed || ""}" alt="Associated technical drawing"/><div class="hint" style="margin-top:8px">Original drawing crop · Quote page ${x.source_page} · Original source included in complete archive.</div></div><div><h3>${esc(x.product)}</h3><div class="detailPrice">${money(x.unit_price, x.currency)} <span style="font-size:12px;font-weight:600;color:#677">per set</span></div>${rows("Project", x.project)}${rows("Quote", x.quote_id + " · " + x.quote_date)}${rows("Source item / page", x.source_item + " / " + x.source_page)}${rows("Dimensions", x.width_mm + " × " + x.height_mm + " mm")}${rows("Quantity / area", x.quantity + " set(s) / " + x.total_sqm + " sqm")}${rows("Quoted line amount", money(x.amount, x.currency))}${rows("Type / operation", x.category + " / " + x.operation)}${rows("Thermal / thickness", x.thermal_break + " / " + (x.thickness || "Not stated"))}${rows("Glazing", x.glass || "Not stated")}${rows("Finish / hardware", (x.finish || "Not stated") + " / " + (x.hardware || "Not stated"))}${rows("Quote source", x.source_file)}${rows("Configuration group", x.configuration_id + " · " + x.revision_status)}${x.review_flag ? rows("Review", x.review_flag) : ""}<div class="pre"><b>Supplier specifications</b>\n${esc(x.specifications || "Not stated")}\n${x.spec_note ? "\nNote: " + esc(x.spec_note) : ""}</div><div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn primary" onclick="copyItem('${esc(x.id)}')">Copy item data</button><a class="btn" href="original_quotes/${encodeURIComponent(x.source_file)}" target="_blank" rel="noopener">Open original (archive)</a></div></div></div>`;
+        showModal("custom");
+      }
+      function copyItem(id) {
+        const x = DATA.find((a) => a.id === id);
+        const txt = [
+          x.id,
+          x.product,
+          x.width_mm + "×" + x.height_mm + "mm",
+          money(x.unit_price, x.currency),
+          x.specifications,
+          x.source_file,
+        ].join("\n");
+        navigator.clipboard
+          ?.writeText(txt)
+          .then(() => alert("Item copied."))
+          .catch(() => prompt("Copy item data:", txt));
+      }
+      function showCompare() {
+        let rowsSel = [...selected]
+          .map((id) => DATA.find((x) => x.id === id))
+          .filter(Boolean);
+        if (rowsSel.length < 2) {
+          alert("Please select 2–4 items to compare.");
+          return;
+        }
+        let attributes = [
+          ["Drawing", (x) => `<img src="${x.drawing_embed || ""}"/>`],
+          ["Unit price", (x) => money(x.unit_price, x.currency)],
+          ["Currency", (x) => esc(x.currency)],
+          ["Dimensions", (x) => `${x.width_mm} × ${x.height_mm} mm`],
+          ["Unit sqm", (x) => x.area_sqm ?? "—"],
+          ["Quantity", (x) => x.quantity],
+          ["Line amount", (x) => money(x.amount, x.currency)],
+          ["Series", (x) => esc(x.series)],
+          ["Thermal system", (x) => esc(x.thermal_break)],
+          ["Glass", (x) => esc(x.glass)],
+          ["Material thickness", (x) => esc(x.thickness)],
+          ["Finish", (x) => esc(x.finish)],
+          ["Hardware", (x) => esc(x.hardware)],
+          ["Date", (x) => esc(x.quote_date)],
+          ["Source / item", (x) => esc(x.quote_id + " #" + x.source_item)],
+          ["Specifications", (x) => esc(x.specifications)],
+        ];
+        let h = `<div class="notice">Compare original quote amounts. Different currencies, dates, dimensions, and technical systems are not directly equivalent.</div><div class="compareWrap"><table class="compareTable"><thead><tr><th>Attribute</th>${rowsSel.map((x) => `<th>${esc(x.product)}</th>`).join("")}</tr></thead><tbody>${attributes.map(([name, fn]) => `<tr><td>${name}</td>${rowsSel.map((x) => `<td>${fn(x)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+        document.getElementById("modalTitle").textContent =
+          "Side-by-side quotation comparison";
+        document.getElementById("modalContent").innerHTML = h;
+        showModal("custom");
+      }
+      function exportCsv() {
+        let keys = [
+          "id",
+          "project",
+          "quote_date",
+          "quote_id",
+          "source_item",
+          "product",
+          "category",
+          "series",
+          "operation",
+          "width_mm",
+          "height_mm",
+          "quantity",
+          "area_sqm",
+          "thermal_break",
+          "glass",
+          "thickness",
+          "finish",
+          "hardware",
+          "unit_price",
+          "amount",
+          "currency",
+          "price_status",
+          "source_file",
+          "source_page",
+          "drawing_file",
+          "specifications",
+          "review_flag",
+        ];
+        const cell = (x) => '\"' + String(x ?? "").replaceAll('\"', '\"\"') + '\"';
+        let txt = [
+          keys.map(cell).join(","),
+          ...filtered.map((r) => keys.map((k) => cell(r[k])).join(",")),
+        ].join("\r\n");
+        let a = document.createElement("a");
+        a.href = URL.createObjectURL(
+          new Blob(["\uFEFF" + txt], { type: "text/csv;charset=utf-8" }),
+        );
+        a.download = "filtered_unit_price_list.csv";
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      }
+      function resetFilters() {
+        ["q", "project", "category", "series", "thermal"].forEach(
+          (id) => (document.getElementById(id).value = ""),
+        );
+        document.getElementById("sort").value = "date";
+        document.querySelector('.tab[data-view="all"]').click();
+      }
+      function showModal(type) {
+        document.getElementById("modal").classList.remove("hidden");
+        if (type === "about") {
+          document.getElementById("modalTitle").textContent =
+            "How to use this library";
+          document.getElementById("modalContent").innerHTML =
+            `<p><b>Search:</b> Type any words from descriptions, dimensions, quotations, glazing, hardware, or series numbers. Combine multiple words for narrower matching.</p><p><b>Filter:</b> Narrow by quote, type, series and thermal system. Change sort for ascending or descending unit price.</p><p><b>Compare:</b> Select checkboxes on two to four records and use the Compare Selected button. Keep currencies and technical specifications distinct.</p><p><b>Drawings:</b> Each quote line has its corresponding source drawing/photo crop. For the original PDF/image and high-resolution cropped JPEG, extract the complete archive.</p><p><b>Data:</b> This public distribution contains no supplier records, drawings, prices, or original source documents. Load only authorised and sanitised data into this reference interface.</p><p><b>Adding later items:</b> The Add Item form stores entries in this browser's local storage only. Export filtered CSV to back up; to process a new PDF quotation with drawing extraction, run a fresh document extraction and import its generated JSON. This offline application does not itself extract PDF tables.</p>`;
+        } else if (type === "add") {
+          document.getElementById("modalTitle").textContent =
+            "Add an unpriced or manually quoted item";
+          document.getElementById("modalContent").innerHTML =
+            `<form id="addForm"><div class="formGrid"><div class="field"><label>Project / description *</label><input required name="project" placeholder="New project"/></div><div class="field"><label>Product *</label><input required name="product" placeholder="110 Series Window Sliding"/></div><div class="field"><label>Series</label><input name="series" placeholder="110 Series"/></div><div class="field"><label>Operation</label><input name="operation" placeholder="Sliding"/></div><div class="field"><label>Width (mm)</label><input type="number" min="0" name="width_mm"/></div><div class="field"><label>Height (mm)</label><input type="number" min="0" name="height_mm"/></div><div class="field"><label>Thermal system</label><select name="thermal_break"><option>Not stated</option><option>Thermal break</option><option>Non-thermal break</option></select></div><div class="field"><label>Currency</label><select name="currency"><option>RMB</option><option>USD</option></select></div><div class="field"><label>Unit price (leave blank if unpriced)</label><input type="number" min="0" step="0.01" name="unit_price" placeholder="Unpriced"/></div><div class="field"><label>Attach drawing (JPEG/PNG, optional)</label><input id="newImage" type="file" accept="image/png,image/jpeg"/></div><div class="field" style="grid-column:1/-1"><label>Technical specifications</label><input name="specifications" placeholder="Glass, profile, thickness, colour, hardware…"/></div></div><p class="hint">Manually added items persist in this browser only. The complete archive should be regenerated when new quotations are processed.</p><button type="submit" class="btn primary">Save to local library</button></form>`;
+          document.getElementById("addForm").onsubmit = saveNew;
+        }
+      }
+      function hideModal() {
+        document.getElementById("modal").classList.add("hidden");
+      }
+      async function saveNew(e) {
+        e.preventDefault();
+        let f = new FormData(e.target),
+          id = "MANUAL-" + Date.now();
+        let drawing = "";
+        let photo = document.getElementById("newImage").files[0];
+        if (photo) {
+          drawing = await new Promise((res) => {
+            let rd = new FileReader();
+            rd.onload = () => res(rd.result);
+            rd.readAsDataURL(photo);
+          });
+          if (drawing.length > 500000) {
+            alert(
+              "Drawing file too large for local storage. Please upload a smaller image.",
+            );
+            return;
+          }
+        }
+        const text = (k) => String(f.get(k) || "").trim();
+        const n = (k) => (text(k) === "" ? null : Number(text(k)));
+        const w = n("width_mm"),
+          h = n("height_mm"),
+          pr = n("unit_price");
+        let o = {
+          id,
+          project: text("project"),
+          quote_date: new Date().toISOString().slice(0, 10),
+          quote_id: "MANUAL_ENTRY",
+          source_file: "Manually added",
+          source_page: 0,
+          source_item: id.slice(-6),
+          product: text("product"),
+          category: /door/i.test(text("product"))
+            ? "Door"
+            : /skylight/i.test(text("product"))
+              ? "Skylight"
+              : "Window",
+          series: text("series"),
+          operation: text("operation") || "Unspecified",
+          location: "",
+          specifications: text("specifications"),
+          thermal_break: text("thermal_break"),
+          glass: "",
+          thickness: "",
+          finish: "",
+          hardware: "",
+          width_mm: w,
+          height_mm: h,
+          area_sqm: w && h ? Math.round((w * h) / 10000) / 100 : null,
+          quantity: 1,
+          total_sqm: w && h ? Math.round((w * h) / 10000) / 100 : null,
+          unit_price: pr,
+          amount: pr,
+          currency: text("currency"),
+          price_status:
+            pr === null
+              ? "Unpriced"
+              : pr === 0
+                ? "Zero quoted (verify)"
+                : "Quoted",
+          drawing_embed: drawing,
+          drawing_file: "",
+          price_basis: "per set",
+          source_type: "Manual entry",
+          configuration_id: id,
+          configuration_quotes: 1,
+          price_variants: 1,
+          revision_status: "Manual entry",
+          review_flag:
+            pr == null ? "Unpriced" : pr === 0 ? "Verify zero price" : "",
+        };
+        added.unshift(o);
+        try {
+          localStorage.setItem(LS, JSON.stringify(added));
+        } catch (err) {
+          alert(
+            "Cannot persist item. Browser storage may be full; export CSV.",
+          );
+        }
+        DATA = [...ORIGINAL_DATA, ...added];
+        hideModal();
+        populate();
+        update();
+      }
+      function importRecords(file) {
+        if (!file) return;
+        let reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const x = JSON.parse(reader.result);
+            if (!Array.isArray(x))
+              throw Error("JSON must be an array of quote item objects");
+            let ok = x
+              .filter((z) => z && typeof z === "object" && z.product && z.id)
+              .map((z) => ({
+                ...z,
+                source_type: z.source_type || "Imported JSON",
+                configuration_id: z.configuration_id || z.id,
+                configuration_quotes: z.configuration_quotes || 1,
+                drawing_embed: z.drawing_embed || "",
+              }));
+            if (!ok.length) throw Error("No item records found");
+            const oldIds = new Set(DATA.map((t) => t.id));
+            let fresh = ok.filter((z) => !oldIds.has(z.id));
+            added.push(...fresh);
+            try {
+              localStorage.setItem(LS, JSON.stringify(added));
+            } catch (e) {}
+            DATA = [...ORIGINAL_DATA, ...added];
+            populate();
+            update();
+            alert(
+              `${fresh.length} new items imported. ${ok.length - fresh.length} duplicate IDs skipped.`,
+            );
+          } catch (e) {
+            alert("Import failed: " + e.message);
+          }
+        };
+        reader.readAsText(file);
+      }
+      for (let id of ["q", "project", "category", "series", "thermal", "sort"])
+        document
+          .getElementById(id)
+          .addEventListener(id === "q" ? "input" : "change", update);
+      document.querySelectorAll(".tab").forEach(
+        (x) =>
+          (x.onclick = () => {
+            document
+              .querySelectorAll(".tab")
+              .forEach((t) => t.classList.remove("active"));
+            x.classList.add("active");
+            currentView = x.dataset.view;
+            update();
+          }),
+      );
+      document
+        .getElementById("importJson")
+        .addEventListener("change", (e) => importRecords(e.target.files[0]));
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") hideModal();
+      });
+      populate();
+      update();
+    </script>
+  </body>
+</html>
